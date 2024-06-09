@@ -51,4 +51,21 @@ public class MoneyTest {
         var reduced = bank.reduce(sum, "USD");
         assertEquals(Money.dollar(10), reduced);
     }
+
+    @Test
+    void testPlusReturnsSum() {
+        var five = Money.dollar(5);
+        var result = five.plus(five);
+        var sum = (Sum) result;
+        assertEquals(five, sum.augend);
+        assertEquals(five, sum.addend);
+    }
+
+    @Test
+    void testReduceSum() {
+        var sum = new Sum(Money.dollar(3), Money.dollar(4));
+        var bank = new Bank();
+        var result = bank.reduce(sum, "USD");
+        assertEquals(Money.dollar(7), result);
+    }
 }

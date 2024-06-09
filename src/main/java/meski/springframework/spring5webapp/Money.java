@@ -19,15 +19,24 @@ public class Money implements Expression {
 
 
     public Expression plus(Money addend) {
-        return new Money(amount + addend.amount, currency);
+        return new Sum(this, addend);
     }
 
     public Money times(int multiplier) {
         return new Money(amount * multiplier, currency);
     }
 
+    public int getAmount() {
+        return amount;
+    }
+
     String getCurrency() {
         return currency;
+    }
+    
+    @Override
+    public Money reduce(String to) {
+        return this;
     }
 
     @Override
