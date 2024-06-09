@@ -3,7 +3,7 @@ package meski.springframework.spring5webapp;
 import java.util.HashMap;
 
 public class Bank {
-    private HashMap<Pair, Integer> rates = new HashMap<>();
+    private final HashMap<Pair, Integer> rates = new HashMap<>();
     
     Money reduce(Expression source, String toCurrency) {
         return source.reduce(this, toCurrency);

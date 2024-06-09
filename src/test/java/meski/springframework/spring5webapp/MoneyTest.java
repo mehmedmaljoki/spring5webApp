@@ -82,4 +82,36 @@ public class MoneyTest {
         assertEquals(1, new Bank().rate("USD", "USD"));
         assertEquals(1, new Bank().rate("CHF", "CHF"));
     }
+
+    @Test
+    void testMixedAddition() {
+        var five = Money.dollar(5);
+        var tenFrancs = Money.franc(10);
+        var bank = new Bank();
+        bank.addRate("CHF", "USD", 2);
+        var result = bank.reduce(five.plus(tenFrancs), "USD");
+        assertEquals(Money.dollar(10), result);
+    }
+
+    @Test
+    void testSumPlusMoney() {
+        var five = Money.dollar(5);
+        var ten = Money.franc(10);
+        var bank = new Bank();
+        bank.addRate("CHF", "USD", 2);
+        var sum = new Sum(five, ten).plus(five);
+        var result = bank.reduce(sum, "USD");
+        assertEquals(Money.dollar(15), result);
+    }
+
+    @Test
+    void testSumTimes() {
+        var five = Money.dollar(5);
+        var ten = Money.franc(10);
+        var bank = new Bank();
+        bank.addRate("CHF", "USD", 2);
+        var sum = new Sum(five, ten).times(2);
+        var result = bank.reduce(sum, "USD");
+        assertEquals(Money.dollar(20), result);
+    }
 }
