@@ -68,4 +68,18 @@ public class MoneyTest {
         var result = bank.reduce(sum, "USD");
         assertEquals(Money.dollar(7), result);
     }
+
+    @Test
+    void testReduceMoneyDifferentCurrency() {
+        var bank = new Bank();
+        bank.addRate("CHF", "USD", 2);
+        var result = bank.reduce(Money.franc(2), "USD");
+        assertEquals(Money.dollar(1), result);
+    }
+
+    @Test
+    void testIdentityRate() {
+        assertEquals(1, new Bank().rate("USD", "USD"));
+        assertEquals(1, new Bank().rate("CHF", "CHF"));
+    }
 }
